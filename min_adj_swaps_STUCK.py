@@ -1,3 +1,6 @@
+from collections import Counter
+
+
 def min_adj_swaps(s: str) -> int:
     """
     Time  : O()

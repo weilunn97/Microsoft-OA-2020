@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import List
 
 
@@ -6,22 +7,18 @@ def largest_m_aligned(arr: List[int], m: int) -> int:
     Time  : O(N)
     Space : O(1), where N = len(arr)
     """
-
     # EDGE CASE
     if m == 0:
         return 0
 
-    # LET REMAINDER[I] = HOW MANY NUMBERS HAVE REMAINDER OF I WHEN DIVIDED BY M
-    remainders = [0] * m
+    # GROUP ALL NUMS WITH THE SAME REMAINDER TGT
+    remainders = defaultdict(list)
 
-    # COUNT THE POSSIBLE REMAINDERS
-    for a in arr:
-        remainders[a % m] += 1
+    for num in arr:
+        remainders[num % m].append(num)
 
-    # DIFFERENCE OF ANY 2 NUMBERS WITH THE SAME REMAINDER AFTER DIVIDING BY M IS
-    # GUARANTEED TO BE DIVISIBLE BY M
-    # ie. if i % m == j % m --> (i - j) % m = 0
-    return max(remainders)
+    # GET THE BIGGEST GROUP
+    return max(len(v) for v in remainders.values())
 
 
 if __name__ == "__main__":
